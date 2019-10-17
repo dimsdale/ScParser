@@ -11,4 +11,6 @@ public final class  Constants {
     public static final String REFERRER = "http://www.google.com";
 
     public static final String SORT_BY_TOPSELLER = "topseller";
+
+    public static final  String TEMPLATE_OF_NEW_PAGES_WITH_PRODUCTS = "https://www.aboutyou.de/maenner/bekleidung?page=%s&sort=%s";
 }

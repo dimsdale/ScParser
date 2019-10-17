@@ -6,17 +6,19 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.util.List;
 
-public interface Parser {
+public interface HTMLParser {
 
     public Product getInfoAboutProduct();
 
-    public Document getMainPage(String URL, String UserAgent) throws IOException;
+    public Document getMainPage() throws IOException;
 
     public List<String> getListOfURLProducts(Document page);
 
     public Document goToProductInfo();
 
-    public Document nextPage(int numberOfPage, String sortBy);
+    public Document nextPage();
+
+    public int getQuantityOfPages(Document document);
 
 
 }
