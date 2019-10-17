@@ -6,15 +6,18 @@ import com.model.Product;
 import com.parsers.JsonConverter;
 import org.apache.log4j.Logger;
 
-public class BasicJsonConverter implements JsonConverter {
+import java.io.Serializable;
+
+public class BasicJsonConverter implements JsonConverter  {
 
     private static Logger logger = Logger.getLogger(BasicJsonConverter.class);
     @Override
     public String convertInJson(Product product) {
         try {
-            return  new ObjectMapper().writer().withDefaultPrettyPrinter().writeValueAsString(this);
+            return  new ObjectMapper().writer().withDefaultPrettyPrinter().writeValueAsString(product);
         } catch (JsonProcessingException e) {
-            logger.error("Smething goes wrong in process converting Product in JSON format");
+            e.printStackTrace();
+            logger.error("Something goes wrong in process converting Product in JSON format");
             return "Empty product";
         }
 
