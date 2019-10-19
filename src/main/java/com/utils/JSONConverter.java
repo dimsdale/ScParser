@@ -1,8 +1,8 @@
-package com.parsers;
+package com.utils;
 
 import com.model.Product;
 
-public interface JsonConverter {
+public interface JSONConverter {
 
     public String convertInJson(Product product);
 }

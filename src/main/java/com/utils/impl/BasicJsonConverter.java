@@ -1,14 +1,12 @@
-package com.parsers.impl;
+package com.utils.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.model.Product;
-import com.parsers.JsonConverter;
+import com.utils.JSONConverter;
 import org.apache.log4j.Logger;
 
-import java.io.Serializable;
-
-public class BasicJsonConverter implements JsonConverter  {
+public class BasicJsonConverter implements JSONConverter {
 
     private static Logger logger = Logger.getLogger(BasicJsonConverter.class);
     @Override

@@ -10,19 +10,14 @@ import java.util.List;
 
 public class Product implements Serializable {
 
-    @JsonProperty("article_id")
     private long article_id;
 
-    @JsonProperty("product_Name")
     private String productName;
 
-    @JsonProperty("brand")
     private String brand;
 
-    @JsonProperty("colorsOfProduct")
     private List<String> colorsOfProduct;
 
-    @JsonProperty("price")
     private double price;
 
     public long getArticle_id() {

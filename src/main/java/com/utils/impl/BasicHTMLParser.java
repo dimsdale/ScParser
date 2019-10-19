@@ -1,40 +1,41 @@
-package com.parsers.impl;
+package com.utils.impl;
 
 import com.Constants;
 import com.Counters;
 import com.model.Product;
-import com.parsers.HTMLParser;
+import com.utils.HTMLParser;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BasicHTMLParser implements HTMLParser {
 
     private static Logger log = Logger.getLogger(BasicHTMLParser.class);
 
-    public Product getInfoAboutProduct() {
-        return null;
+    public void getInfoAboutProduct(Product product, Document document) {
+
     }
 
     public Document getMainPage() throws IOException {
-        return Jsoup.connect(Constants.MAIN_PAGE).userAgent(Constants.USER_AGENT).referrer(Constants.REFERRER).get();
+        return Jsoup.connect(Constants.MAIN_PAGE).userAgent("Mozilla").get();
     }
 
     public List<String> getListOfURLProducts(Document page) {
         return null;
     }
 
-    public Document goToProductInfo() {
+    public Document goToProductInfo(String urlProd) {
         return null;
     }
 
-    public Document nextPage() {
+    public Document nextPage(String url) {
         try {
-            return Jsoup.connect(getURLNextPage(Counters.CURRENT_PAGE_OF_LIST, Constants.SORT_BY_TOPSELLER)).userAgent(Constants.USER_AGENT).get();
+            return Jsoup.connect(url).userAgent(Constants.USER_AGENT).get();
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -52,7 +53,12 @@ public class BasicHTMLParser implements HTMLParser {
         return -1;
        }
 
-    private String getURLNextPage(int numberOfPage, String sortBy){
-        return String.format(Constants.TEMPLATE_OF_NEW_PAGES_WITH_PRODUCTS, numberOfPage, sortBy);
+    public List<String> getListOfAllUrlWithProducts(int quantityOfPages, String sortBy){
+        log.info("Create list with all url with products");
+        List<String> allUrl = new ArrayList<>();
+        for (int i = 2; i <= quantityOfPages; i++){
+            allUrl.add(String.format(Constants.TEMPLATE_OF_NEW_PAGES_WITH_PRODUCTS, 2, sortBy));
+        }
+        return allUrl;
     }
 }
