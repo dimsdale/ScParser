@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class Product implements Serializable {
+public class Product extends JSONObject implements Serializable {
 
     private long article_id;
 

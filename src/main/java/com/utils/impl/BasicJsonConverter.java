@@ -3,10 +3,10 @@ package com.utils.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.model.Product;
-import com.utils.JSONConverter;
+import com.utils.JsonWriter;
 import org.apache.log4j.Logger;
 
-public class BasicJsonConverter implements JSONConverter {
+public class BasicJsonConverter implements JsonWriter {
 
     private static Logger logger = Logger.getLogger(BasicJsonConverter.class);
     @Override

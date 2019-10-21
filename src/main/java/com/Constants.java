@@ -10,7 +10,8 @@ public final class  Constants {
 
     public static final String REFERRER = "http://www.google.com";
 
-    public static final String SORT_BY_TOPSELLER = "topseller";
+    public static final String TEMPLATE_OF_PAGE_WITH_PRODUCT_INFO = "https://www.aboutyou.de/p/%s/%s-%s";
 
-    public static final  String TEMPLATE_OF_NEW_PAGES_WITH_PRODUCTS = "https://www.aboutyou.de/maenner/bekleidung?page=%s&sort=%s";
+    public static final String TEMPLATE_OF_REQUEST_TO_SERVER = "https://api-cloud.aboutyou.de/v1/products?with=attributes%%3Akey%%28brand%%7Cname%%29&filters%%5Bcategory%%5D=20290&sortDir=desc&sortScore=category_scores&sortChannel=etkp&page=%s&campaignKey=px&shopId=139";
 }
+
