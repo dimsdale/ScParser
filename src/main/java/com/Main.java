@@ -25,18 +25,22 @@ public class Main {
          jsonWriter = new BasicJsonConverter();
          JSONObject object = jsonParser.getJsonObjectFromResponse(String.format(Constants.TEMPLATE_OF_REQUEST_TO_SERVER, 1));
          Constants.QUANTITY_OF_PAGES = jsonParser.getQuantityOfPages(object);
+         System.out.println("Sum pages" + Constants.QUANTITY_OF_PAGES);
          if (Constants.QUANTITY_OF_PAGES == -1)
              System.exit(-1);
          for (int i = 1; i <= Constants.QUANTITY_OF_PAGES; ++i)
          {
+             System.out.println("Current page " + i);
                 workingJsonArray = object.getJSONArray("entities");
                 for (int k = 0; k < workingJsonArray.length(); k++){
                     tempJson = workingJsonArray.getJSONObject(k);
+                    System.out.println(tempJson.toString());
                     products.add(jsonParser.getInfoAboutProduct(tempJson));
-
+                    System.out.println("Current page" + i);
                 }
                 if (i == Constants.QUANTITY_OF_PAGES)
                     break;
+             System.out.println("Currentpage" + i);
                 object = jsonParser.getJsonObjectFromResponse(String.format(Constants.TEMPLATE_OF_REQUEST_TO_SERVER, i));
          }
 

@@ -1,6 +1,7 @@
 package com.model;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -33,7 +34,8 @@ public class Product extends JSONObject implements Serializable {
        JSONArray temp = jsonWithSizes.getJSONArray("variants");
        sizes = new ArrayList<>(temp.length());
        for (int i = 0; i < temp.length(); i++){
-           sizes.add(temp.getJSONObject(i).getJSONObject("attributes").getJSONObject("vendorSize").getJSONObject("values").getString("value"));
+           System.out.println(temp.getJSONObject(i).getJSONObject("attributes").toString());
+           sizes.add(temp.getJSONObject(i).getJSONObject("attributes").getJSONObject("vendorSize").getJSONObject("values").getString("label"));
        }
     }
 
@@ -66,7 +68,13 @@ public class Product extends JSONObject implements Serializable {
     }
 
     public void setColorsOfProduct(JSONObject jsonWithColors) {
-        JSONArray temp = jsonWithColors.getJSONObject("attributes").getJSONObject("colorDetail").getJSONArray("values");
+        JSONArray temp;
+        try {
+            temp = jsonWithColors.getJSONObject("attributes").getJSONObject("colorDetail").getJSONArray("values");
+        } catch (JSONException e){
+            return;
+        }
+
         colorsOfProduct = new ArrayList<>(temp.length());
         for (int i = 0; i < temp.length(); i++)
             colorsOfProduct.add(temp.getJSONObject(i).getString("label"));
