@@ -1,21 +1,14 @@
 package com;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.model.Product;
-import com.utils.JsonParser;
 import com.utils.JsonWriter;
-import com.utils.impl.BasicJsonParser;
 import com.utils.impl.BasicJsonConverter;
+import com.utils.impl.BasicJsonParser;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,28 +17,30 @@ public class Main {
     private static Logger logMain = Logger.getLogger(Main.class);
     private static BasicJsonParser jsonParser;
     private static JsonWriter jsonWriter;
-    private static List<String> futureListWithUrl = new ArrayList<>(100);
-    private static List<String> allPagesWithProducts;
-     public static void main(String[] args) throws IOException {
+    private volatile static List<Product> products = new ArrayList<>();
+    private volatile static JSONArray workingJsonArray;
+    private static JSONObject tempJson;
+     public static void main(String[] args) {
          jsonParser = new BasicJsonParser();
          jsonWriter = new BasicJsonConverter();
-         futureListWithUrl = jsonParser.getListOfURLProducts(String.format(Constants.TEMPLATE_OF_REQUEST_TO_SERVER, 1), futureListWithUrl);
-//         JSONObject object = jsonParser.getJsonFromUrl(String.format(Constants.TEMPLATE_OF_REQUEST_TO_SERVER, 1));
-//         JSONArray array = object.getJSONArray("entities");
-//         String q = array.getJSONObject(0).getJSONObject("attributes").getJSONObject("brand").getJSONObject("values").getString("value");
-//         System.out.println(q);
-//         for (int i = 0; i < array.length(); i++){
-//
-//         }
-//         System.out.println(Jsoup.connect(String.format(Constants.TEMPLATE_OF_REQUEST_TO_SERVER,1)).userAgent(Constants.USER_AGENT).get());
-//         Constants.QUANTITY_OF_PAGES = jsonParser.getQuantityOfPages(jsonParser.connectToTheSite());
-//         if (Constants.QUANTITY_OF_PAGES == -1){
-//             System.exit(Constants.QUANTITY_OF_PAGES);
-//         }
-//         allPagesWithProducts = jsonParser.getListOfRequestslWithProducts(Constants.QUANTITY_OF_PAGES);
-//         for (String currentPage: allPagesWithProducts){
-//             allProductsList = jsonParser.getListOfURLProducts(currentPage);
-//         }
+         JSONObject object = jsonParser.getJsonObjectFromResponse(String.format(Constants.TEMPLATE_OF_REQUEST_TO_SERVER, 1));
+         Constants.QUANTITY_OF_PAGES = jsonParser.getQuantityOfPages(object);
+         if (Constants.QUANTITY_OF_PAGES == -1)
+             System.exit(-1);
+         for (int i = 1; i <= Constants.QUANTITY_OF_PAGES; ++i)
+         {
+                workingJsonArray = object.getJSONArray("entities");
+                for (int k = 0; k < workingJsonArray.length(); k++){
+                    tempJson = workingJsonArray.getJSONObject(k);
+                    products.add(jsonParser.getInfoAboutProduct(tempJson));
+
+                }
+                if (i == Constants.QUANTITY_OF_PAGES)
+                    break;
+                object = jsonParser.getJsonObjectFromResponse(String.format(Constants.TEMPLATE_OF_REQUEST_TO_SERVER, i));
+         }
+
+
 
 
 

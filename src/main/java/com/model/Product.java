@@ -1,17 +1,15 @@
 package com.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product extends JSONObject implements Serializable {
 
-    private long article_id;
+    private long id;
 
     private String productName;
 
@@ -19,10 +17,24 @@ public class Product extends JSONObject implements Serializable {
 
     private List<String> colorsOfProduct;
 
-    private double price;
+    private List<String> sizes;
 
-    public long getArticle_id() {
-        return article_id;
+    private int price;
+
+    public long getId() {
+        return id;
+    }
+
+    public List<String> getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(JSONObject jsonWithSizes) {
+       JSONArray temp = jsonWithSizes.getJSONArray("variants");
+       sizes = new ArrayList<>(temp.length());
+       for (int i = 0; i < temp.length(); i++){
+           sizes.add(temp.getJSONObject(i).getJSONObject("attributes").getJSONObject("vendorSize").getJSONObject("values").getString("value"));
+       }
     }
 
     public String getProductName() {
@@ -37,12 +49,12 @@ public class Product extends JSONObject implements Serializable {
         return colorsOfProduct;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setArticle_id(long article_id) {
-        this.article_id = article_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setProductName(String productName) {
@@ -53,11 +65,14 @@ public class Product extends JSONObject implements Serializable {
         this.brand = brand;
     }
 
-    public void setColorsOfProduct(List<String> colorsOfProduct) {
-        this.colorsOfProduct = colorsOfProduct;
+    public void setColorsOfProduct(JSONObject jsonWithColors) {
+        JSONArray temp = jsonWithColors.getJSONObject("attributes").getJSONObject("colorDetail").getJSONArray("values");
+        colorsOfProduct = new ArrayList<>(temp.length());
+        for (int i = 0; i < temp.length(); i++)
+            colorsOfProduct.add(temp.getJSONObject(i).getString("label"));
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

@@ -1,6 +1,7 @@
 package com.utils;
 
 import com.model.Product;
+import org.json.JSONObject;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
@@ -8,17 +9,12 @@ import java.util.List;
 
 public interface JsonParser {
 
-    public void getInfoAboutProduct(Product product, Document document);
+     Product getInfoAboutProduct(JSONObject object);
 
-    public Document connectToTheSite() throws IOException;
+     int getQuantityOfPages(JSONObject jsonObject);
 
-    public List<String> getListOfURLProducts(String url, List<String> futureListWithUrl);
+     JSONObject getJsonObjectFromResponse(String url);
 
-    public Document goToProductInfo(String urlProd);
-
-    public int getQuantityOfPages(Document document);
-
-    public List<String> getListOfRequestslWithProducts(int quantityOfPages);
 
 
 }
