@@ -1,5 +1,6 @@
 import com.utils.JsonParser;
 import com.utils.impl.BasicJsonParser;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
@@ -21,6 +22,11 @@ public class TestJsonParser {
     @Test(expected = NullPointerException.class)
     public void testOnNullableResponse(){
         testParser.getJsonObjectFromResponse(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testOnNullableInfoAboutProduct(){
+        testParser.getInfoAboutProduct(null);
     }
 
 

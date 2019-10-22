@@ -4,6 +4,7 @@ import com.Counters;
 import com.model.Product;
 import com.utils.JsonParser;
 import org.apache.log4j.Logger;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -16,18 +17,23 @@ public class BasicJsonParser implements JsonParser {
 
     public Product getInfoAboutProduct(JSONObject object) {
         Product product = new Product();
-        product.setId(object.getInt("id"));
-        System.out.println("Id id " + product.getId());
-        product.setBrand(object.getJSONObject("attributes").getJSONObject("brand").getJSONObject("values").getString("label"));
-        System.out.println("Brand is " + product.getBrand());
-        product.setProductName(object.getJSONObject("attributes").getJSONObject("name").getJSONObject("values").getString("label"));
-        System.out.println("Product name is " + product.getProductName());
-        product.setPrice(object.getJSONObject("priceRange").getJSONObject("min").getInt("withTax"));
-        product.setColorsOfProduct(object);
-        product.setSizes(object);
-        Counters.COUNTER_OF_PRODUCTS++;
-        System.out.println(Counters.COUNTER_OF_PRODUCTS);
-        return product;
+        try {
+            product.setId(object.getInt("id"));
+            System.out.println("Id id " + product.getId());
+            product.setBrand(object.getJSONObject("attributes").getJSONObject("brand").getJSONObject("values").getString("label"));
+            System.out.println("Brand is " + product.getBrand());
+            product.setProductName(object.getJSONObject("attributes").getJSONObject("name").getJSONObject("values").getString("label"));
+            System.out.println("Product name is " + product.getProductName());
+            product.setPrice(object.getJSONObject("priceRange").getJSONObject("min").getInt("withTax"));
+            product.setColorsOfProduct(object);
+            product.setSizes(object);
+            Counters.COUNTER_OF_PRODUCTS++;
+            System.out.println(Counters.COUNTER_OF_PRODUCTS);
+            return product;
+        }catch (JSONException e){
+            log.error("Error. Empty JSON was ");
+        }
+       return product;
     }
 
     public int getQuantityOfPages(JSONObject jsonObject) {
