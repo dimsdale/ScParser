@@ -63,6 +63,9 @@ public class BasicJsonParser implements JsonParser {
         } catch (IOException e) {
             log.error("Has problems with reading. More information below");
             e.printStackTrace();
+        } catch (NullPointerException e){
+            log.error("Empty Url Response");
+            e.printStackTrace();
         }
         finally {
             Counters.COUNTER_HTTP_REQUESTS++;

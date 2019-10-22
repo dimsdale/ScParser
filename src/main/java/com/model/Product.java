@@ -1,5 +1,7 @@
 package com.model;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,7 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Product extends JSONObject implements Serializable {
+public class Product implements Serializable {
 
     private long id;
 
@@ -34,9 +36,14 @@ public class Product extends JSONObject implements Serializable {
        JSONArray temp = jsonWithSizes.getJSONArray("variants");
        sizes = new ArrayList<>(temp.length());
        for (int i = 0; i < temp.length(); i++){
-           System.out.println(temp.getJSONObject(i).getJSONObject("attributes").toString());
-           sizes.add(temp.getJSONObject(i).getJSONObject("attributes").getJSONObject("vendorSize").getJSONObject("values").getString("label"));
-       }
+           try {
+               sizes.add(temp.getJSONObject(i).getJSONObject("attributes").getJSONObject("vendorSize").getJSONObject("values").getString("label"));
+
+           }catch (JSONException e){
+               e.printStackTrace();
+               return;
+           }
+           }
     }
 
     public String getProductName() {
@@ -72,6 +79,7 @@ public class Product extends JSONObject implements Serializable {
         try {
             temp = jsonWithColors.getJSONObject("attributes").getJSONObject("colorDetail").getJSONArray("values");
         } catch (JSONException e){
+            e.printStackTrace();
             return;
         }
 
@@ -85,5 +93,16 @@ public class Product extends JSONObject implements Serializable {
     }
 
     public Product() {
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "Empty product";
+        }
+
     }
 }
