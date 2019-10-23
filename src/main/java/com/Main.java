@@ -8,7 +8,6 @@ import com.utils.impl.BasicJsonParser;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +24,11 @@ public class Main {
     private static Logger logger = Logger.getLogger(Main.class);
 
      public static void main(String[] args)  {
+
          Scanner scanner = new Scanner(System.in);
          System.out.print("Welcome! Please insert the path, where will create file with JSON: ");
          pathForCreatingFile = scanner.next();
-         File file = new File(pathForCreatingFile);
+         File file = new File(pathForCreatingFile + "/Product.json");
          jsonWriter = new BasicJsonWriter();
          jsonParser = new BasicJsonParser();
          Constants.QUANTITY_OF_PAGES = jsonParser.getQuantityOfPages(jsonParser.getJsonObjectFromResponse(String.format(Constants.TEMPLATE_OF_REQUEST_TO_SERVER, 1)));
@@ -41,8 +41,6 @@ public class Main {
              workingJsonArray = jsonWithServerResponse.getJSONArray("entities");
              for (int k = 0; k < workingJsonArray.length(); k++){
                  products.add(jsonParser.getInfoAboutProduct(workingJsonArray.getJSONObject(k)));
-                 System.out.println(Counters.COUNTER_OF_PRODUCTS);
-                 System.out.println(String.format(Constants.TEMPLATE_OF_REQUEST_TO_SERVER, i));
              }
          }
 

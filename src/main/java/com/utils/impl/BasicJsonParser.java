@@ -6,15 +6,12 @@ import com.utils.JsonParser;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-
 import java.io.*;
 import java.net.URL;
 
+
 public class BasicJsonParser implements JsonParser {
-
-    private static Logger log = Logger.getLogger(BasicJsonParser.class);
-
+    private Logger log = Logger.getLogger(BasicJsonParser.class);
     public Product getInfoAboutProduct(JSONObject object) {
         Product product = new Product();
         try {
@@ -27,7 +24,8 @@ public class BasicJsonParser implements JsonParser {
             Counters.COUNTER_OF_PRODUCTS++;
             return product;
         }catch (JSONException e){
-            log.error("Error. Was empty JSON");
+            System.out.println(product.getId() + " with not fully information");
+
         } catch (NullPointerException e){
             product.setId(-1);
             return product;

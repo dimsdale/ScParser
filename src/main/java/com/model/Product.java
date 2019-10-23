@@ -75,13 +75,7 @@ public class Product implements Serializable {
     }
 
     public void setColorsOfProduct(JSONObject jsonWithColors) {
-        JSONArray temp;
-        try {
-            temp = jsonWithColors.getJSONObject("attributes").getJSONObject("colorDetail").getJSONArray("values");
-        } catch (JSONException e){
-            e.printStackTrace();
-            return;
-        }
+        JSONArray temp =jsonWithColors.getJSONObject("attributes").getJSONObject("colorDetail").getJSONArray("values");
 
         colorsOfProduct = new ArrayList<>(temp.length());
         for (int i = 0; i < temp.length(); i++)
