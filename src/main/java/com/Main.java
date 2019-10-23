@@ -17,18 +17,13 @@ public class Main {
 
     private static JsonWriter jsonWriter;
     private static JsonParser jsonParser;
-    private static String pathForCreatingFile;
     private static List<Product> products = new ArrayList<>();
     private static JSONObject jsonWithServerResponse;
     private static JSONArray workingJsonArray;
     private static Logger logger = Logger.getLogger(Main.class);
 
      public static void main(String[] args)  {
-
-         Scanner scanner = new Scanner(System.in);
-         System.out.print("Welcome! Please insert the path, where will create file with JSON: ");
-         pathForCreatingFile = scanner.next();
-         File file = new File(pathForCreatingFile + "/Product.json");
+         File file = new File("Product.json");
          jsonWriter = new BasicJsonWriter();
          jsonParser = new BasicJsonParser();
          Constants.QUANTITY_OF_PAGES = jsonParser.getQuantityOfPages(jsonParser.getJsonObjectFromResponse(String.format(Constants.TEMPLATE_OF_REQUEST_TO_SERVER, 1)));

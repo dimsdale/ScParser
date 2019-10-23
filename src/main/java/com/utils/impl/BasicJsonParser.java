@@ -24,7 +24,7 @@ public class BasicJsonParser implements JsonParser {
             Counters.COUNTER_OF_PRODUCTS++;
             return product;
         }catch (JSONException e){
-            System.out.println(product.getId() + " with not fully information");
+            System.out.println("Product with Id " + product.getId() + " has not fully information");
 
         } catch (NullPointerException e){
             product.setId(-1);
