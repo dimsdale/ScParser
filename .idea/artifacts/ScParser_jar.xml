@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="ScParser:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/ScParser_jar</output-path>
+  <artifact type="jar" build-on-make="true" name="ScParser:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ScParserExe</output-path>
     <root id="archive" name="ScParser.jar">
       <element id="module-output" name="ScParser" />
       <element id="module-test-output" name="ScParser" />
