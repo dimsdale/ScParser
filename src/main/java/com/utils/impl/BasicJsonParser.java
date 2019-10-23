@@ -19,19 +19,18 @@ public class BasicJsonParser implements JsonParser {
         Product product = new Product();
         try {
             product.setId(object.getInt("id"));
-            System.out.println("Id id " + product.getId());
             product.setBrand(object.getJSONObject("attributes").getJSONObject("brand").getJSONObject("values").getString("label"));
-            System.out.println("Brand is " + product.getBrand());
             product.setProductName(object.getJSONObject("attributes").getJSONObject("name").getJSONObject("values").getString("label"));
-            System.out.println("Product name is " + product.getProductName());
             product.setPrice(object.getJSONObject("priceRange").getJSONObject("min").getInt("withTax"));
             product.setColorsOfProduct(object);
             product.setSizes(object);
             Counters.COUNTER_OF_PRODUCTS++;
-            System.out.println(Counters.COUNTER_OF_PRODUCTS);
             return product;
         }catch (JSONException e){
-            log.error("Error. Empty JSON was ");
+            log.error("Error. Was empty JSON");
+        } catch (NullPointerException e){
+            product.setId(-1);
+            return product;
         }
        return product;
     }
@@ -47,11 +46,16 @@ public class BasicJsonParser implements JsonParser {
         return -1;
     }
 
-    private String readJsonFromUrl(Reader reader) throws IOException {
+    private String readJsonFromUrl(Reader reader) {
         StringBuilder sb = new StringBuilder();
         int cp;
-        while ((cp = reader.read()) != -1) {
-            sb.append((char) cp);
+        try {
+            while ((cp = reader.read()) != -1) {
+                sb.append((char) cp);
+            }
+        } catch (IOException e){
+            log.error("Cannot read response Json: ");
+            e.printStackTrace();
         }
         return sb.toString();
     }
@@ -64,8 +68,8 @@ public class BasicJsonParser implements JsonParser {
             stream = new URL(url).openStream();
             reader = new BufferedReader(new InputStreamReader(stream));
             jsonText = readJsonFromUrl(reader);
-            JSONObject json = new JSONObject(jsonText);
-            return json;
+              return new JSONObject(jsonText);
+
         } catch (IOException e) {
             log.error("Has problems with reading. More information below");
             e.printStackTrace();

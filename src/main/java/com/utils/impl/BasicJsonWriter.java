@@ -16,10 +16,10 @@ public class BasicJsonWriter implements JsonWriter {
 
     private static Logger logger = Logger.getLogger(BasicJsonWriter.class);
 
-    public void writeInFile(List<Product> products, String path)  {
+    public void writeInFile(List<Product> products, File file)  {
         BufferedWriter writer;
         try {
-            writer = new BufferedWriter(new FileWriter(new File(path + "/Product.json")));
+            writer = new BufferedWriter(new FileWriter(file));
 
         }catch (IOException e){
             logger.error("Cannot open File Writer");

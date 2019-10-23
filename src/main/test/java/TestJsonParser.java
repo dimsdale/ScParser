@@ -1,17 +1,14 @@
 import com.utils.JsonParser;
 import com.utils.impl.BasicJsonParser;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
-
-import java.io.IOException;
 
 import static org.junit.Assert.*;
 
 
 public class TestJsonParser {
 
-    JsonParser testParser = new BasicJsonParser();
+    private JsonParser testParser = new BasicJsonParser();
 
     @Test
     public void testOnNullableQuantityOfPages(){
@@ -24,9 +21,9 @@ public class TestJsonParser {
         testParser.getJsonObjectFromResponse(null);
     }
 
-    @Test(expected = NullPointerException.class)
-    public void testOnNullableInfoAboutProduct(){
-        testParser.getInfoAboutProduct(null);
+    @Test
+    public void testOnWritingOfProductinPojo(){
+        assertEquals(testParser.getInfoAboutProduct(null).getId(), -1);
     }
 
 
