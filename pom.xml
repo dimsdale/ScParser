@@ -16,6 +16,7 @@
     <build>
         <finalName>ScParser</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/main/test</testSourceDirectory>
         <defaultGoal>package</defaultGoal>
         <plugins>
             <plugin>
